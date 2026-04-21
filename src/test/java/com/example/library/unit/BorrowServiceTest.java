@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -190,15 +191,21 @@ class BorrowServiceTest {
             // TODO: After borrowBook(), verify that book.availableCopies decreased by 1
             //       Hint: Use ArgumentCaptor to capture the Book saved to repository
             // Arrange
-
+            when(memberRepository.findById(1L)).thenReturn(Optional.of(sampleMember));
+            when(bookRepository.findById(1L)).thenReturn(Optional.of(sampleBook));
+            when(borrowRecordRepository.countActiveBorrowsByMember(1L)).thenReturn(0);
+            when(borrowRecordRepository.existsByBookIdAndMemberIdAndStatus(1L, 1L, BorrowStatus.BORROWED))
+                    .thenReturn(false);
 
             // Act
+            borrowService.borrowBook(1L, 1L);
 
+            // Assert and Verify
+            ArgumentCaptor<Book> bookCaptor = ArgumentCaptor.forClass(Book.class); //Book objelerini yakalar
+            verify(bookRepository).save(bookCaptor.capture()); //Kitabı yakala
 
-            // Assert
-
-
-            // Verify
+            Book savedBook = bookCaptor.getValue();
+            assertEquals(2, savedBook.getAvailableCopies(), "Available copies should decrease by 1");
         }
     }
 

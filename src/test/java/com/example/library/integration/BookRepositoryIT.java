@@ -119,7 +119,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("Genre and author queries")
     class FilterTests {
-
+        // Seçkin
         @Test
         @DisplayName("should find books by genre")
         void shouldFindByGenre() {
@@ -135,7 +135,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
             //       Search by partial author name and verify results
             fail("Not implemented yet");
         }
-
+        // Baha
         @Test
         @DisplayName("should search by author name using searchBooks()")
         void shouldSearchByAuthorKeyword() {
@@ -155,7 +155,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("Edge cases")
     class EdgeCaseTests {
-
+        // Seçkin
         @Test
         @DisplayName("should enforce unique ISBN constraint")
         void shouldEnforceUniqueIsbn() {
@@ -164,7 +164,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
             //       Hint: Use assertThrows() and flush the persistence context
             fail("Not implemented yet");
         }
-
+        // Baha
         @Test
         @DisplayName("should handle deleting a book")
         void shouldDeleteBook() {

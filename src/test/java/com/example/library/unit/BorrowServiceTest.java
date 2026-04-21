@@ -145,15 +145,23 @@ class BorrowServiceTest {
             // TODO: Set up mocks so existsByBookIdAndMemberIdAndStatus returns true
             //       Then verify IllegalStateException is thrown
             // Arrange
+            when(memberRepository.findById(1L)).thenReturn(Optional.of(sampleMember));
+            when(bookRepository.findById(1L)).thenReturn(Optional.of(sampleBook));
 
+            when(borrowRecordRepository.countActiveBorrowsByMember(1L)).thenReturn(1);
 
-            // Act
+            when(borrowRecordRepository.existsByBookIdAndMemberIdAndStatus(1L, 1L, BorrowStatus.BORROWED))
+                    .thenReturn(true);
 
+            // Act and Assert
+            IllegalStateException exception = assertThrows(IllegalStateException.class,
+                    () -> borrowService.borrowBook(1L, 1L));
 
-            // Assert
-
+            assertEquals("Member already has this book borrowed", exception.getMessage());
 
             // Verify
+            verify(borrowRecordRepository, never()).save(any(BorrowRecord.class));
+            verify(bookRepository, never()).save(any(Book.class));
         }
 
         @Test

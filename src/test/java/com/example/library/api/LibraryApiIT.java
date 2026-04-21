@@ -236,9 +236,20 @@ class LibraryApiIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should create a member and return 201")
         void shouldCreateMember() {
-            // TODO: POST a new member to /api/members
-            //       Verify 201 status and response body
-            fail("Not implemented yet");
+            // ADDED: POST a new member to /api/members
+            //        Verify 201 status and response body
+            Member newMember = new Member("Bob Smith", "bob.smith@test.com", MembershipType.STANDARD);
+
+            ResponseEntity<Member> response = restTemplate.postForEntity(
+                    baseUrl + "/members", newMember, Member.class);
+
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            assertThat(response.getBody()).isNotNull();
+            assertThat(response.getBody().getId()).isNotNull();
+            assertThat(response.getBody().getName()).isEqualTo("Bob Smith");
+            assertThat(response.getBody().getEmail()).isEqualTo("bob.smith@test.com");
+            assertThat(response.getBody().getMembershipType()).isEqualTo(MembershipType.STANDARD);
+            assertThat(response.getBody().isActive()).isTrue();
         }
 
         @Test

@@ -282,9 +282,20 @@ class LibraryApiIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should return 400 when creating member with invalid email")
         void shouldReturn400_WhenInvalidEmail() {
-            // TODO: POST a member with an invalid email
+            // ADDED: POST a member with an invalid email
             //       Verify 400 BAD REQUEST
-            fail("Not implemented yet");
+            Member invalid = new Member("Darth Vader", "i-am-your-father", MembershipType.STUDENT);
+
+            ResponseEntity<Map> response = restTemplate.postForEntity(
+                    baseUrl + "/members", invalid, Map.class);
+
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(response.getBody()).isNotNull();
+            assertThat(response.getBody()).containsKey("errors");
+
+            @SuppressWarnings("unchecked")
+            Map<String, String> errors = (Map<String, String>) response.getBody().get("errors");
+            assertThat(errors).containsKey("email");
         }
     }
 

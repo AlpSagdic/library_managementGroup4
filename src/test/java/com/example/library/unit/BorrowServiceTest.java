@@ -278,15 +278,17 @@ class BorrowServiceTest {
             // TODO: Mock repository to return empty Optional
             //       Verify IllegalStateException is thrown
             // Arrange
+            when(borrowRecordRepository.findById(1L)).thenReturn(Optional.empty()); // Boş dönecek
 
+            // Act and Assert
+            IllegalStateException exception = assertThrows(IllegalStateException.class,
+                    () -> borrowService.returnBook(1L));
 
-            // Act
-
-
-            // Assert
-
+            assertEquals("Borrow record not found: 1", exception.getMessage());
 
             // Verify
+            verify(borrowRecordRepository, never()).save(any(BorrowRecord.class));
+            verify(bookRepository, never()).save(any(Book.class));
         }
     }
 }

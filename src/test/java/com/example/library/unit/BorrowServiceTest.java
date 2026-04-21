@@ -144,7 +144,16 @@ class BorrowServiceTest {
         void shouldThrow_WhenDuplicateBorrow() {
             // TODO: Set up mocks so existsByBookIdAndMemberIdAndStatus returns true
             //       Then verify IllegalStateException is thrown
-            fail("Not implemented yet");
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+
+            // Verify
         }
 
         @Test
@@ -152,7 +161,16 @@ class BorrowServiceTest {
         void shouldThrow_WhenMemberInactive() {
             // TODO: Set member.active = false
             //       Then verify IllegalStateException is thrown with appropriate message
-            fail("Not implemented yet");
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+
+            // Verify
         }
 
         @Test
@@ -160,7 +178,16 @@ class BorrowServiceTest {
         void shouldDecreaseAvailableCopies() {
             // TODO: After borrowBook(), verify that book.availableCopies decreased by 1
             //       Hint: Use ArgumentCaptor to capture the Book saved to repository
-            fail("Not implemented yet");
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+
+            // Verify
         }
     }
 
@@ -181,7 +208,16 @@ class BorrowServiceTest {
             //       - status changed to RETURNED
             //       - returnDate is set
             //       - available copies increased
-            fail("Not implemented yet");
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+
+            // Verify
         }
 
         @Test
@@ -189,7 +225,16 @@ class BorrowServiceTest {
         void shouldThrow_WhenAlreadyReturned() {
             // TODO: Create a BorrowRecord with RETURNED status
             //       Verify IllegalStateException is thrown
-            fail("Not implemented yet");
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+
+            // Verify
         }
 
         @Test
@@ -197,7 +242,16 @@ class BorrowServiceTest {
         void shouldThrow_WhenRecordNotFound() {
             // TODO: Mock repository to return empty Optional
             //       Verify IllegalStateException is thrown
-            fail("Not implemented yet");
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+
+            // Verify
         }
     }
 }

@@ -295,7 +295,7 @@ class LibraryApiIT extends AbstractIntegrationTest {
 
             @SuppressWarnings("unchecked")
             Map<String, String> errors = (Map<String, String>) response.getBody().get("errors");
-            assertThat(errors).containsKey("email");
+            assertThat(errors).containsEntry("email", "Valid email is required");
         }
     }
 
@@ -329,7 +329,7 @@ class LibraryApiIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should get active borrows for a member")
         void shouldGetActiveBorrows() {
-            // TODO:
+            // ADDED:
             // 1. Create a member and 2 books
             // 2. Borrow both books
             // 3. Return one of them

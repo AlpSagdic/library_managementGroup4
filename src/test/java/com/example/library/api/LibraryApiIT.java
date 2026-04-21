@@ -232,7 +232,6 @@ class LibraryApiIT extends AbstractIntegrationTest {
 
     @Nested
     @DisplayName("Member API")
-    @Disabled("Alp bu kısımdan sorumlu")
     class MemberApiTests {
         // Alp
         @Test
@@ -301,7 +300,6 @@ class LibraryApiIT extends AbstractIntegrationTest {
 
     @Nested
     @DisplayName("Search & Filter API")
-    @Disabled("Alp bu kısımdan sorumlu")
     class SearchApiTests {
         // Alp
         @Test

@@ -124,7 +124,19 @@ class BorrowServiceTest {
         void shouldThrow_WhenBorrowLimitReached() {
             // TODO: Set up mocks so countActiveBorrowsByMember returns maxBooks (3 for STANDARD)
             //       Then verify BorrowLimitExceededException is thrown
-            fail("Not implemented yet");
+            // Arrange
+            when(memberRepository.findById(1L)).thenReturn(Optional.of(sampleMember));
+            when(bookRepository.findById(1L)).thenReturn(Optional.of(sampleBook));
+
+            when(borrowRecordRepository.countActiveBorrowsByMember(1L)).thenReturn(3);
+
+            // Act and Assert
+            assertThrows(BorrowLimitExceededException.class,
+                    () -> borrowService.borrowBook(1L, 1L));
+
+            // Verify
+            verify(borrowRecordRepository, never()).save(any(BorrowRecord.class));
+            verify(bookRepository, never()).save(any(Book.class));
         }
 
         @Test

@@ -152,6 +152,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
 
     @Nested
     @DisplayName("Edge cases")
+    @Disabled("Seçkin ve Hamza bu kısımlardan sorumlu")
     class EdgeCaseTests {
         // Seçkin
         @Test

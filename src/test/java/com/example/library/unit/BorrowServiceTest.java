@@ -227,15 +227,26 @@ class BorrowServiceTest {
             //       - returnDate is set
             //       - available copies increased
             // Arrange
+            BorrowRecord mockRecord = new BorrowRecord(sampleBook, sampleMember);
+            mockRecord.setId(1L);
+            mockRecord.setStatus(BorrowStatus.BORROWED);
 
+            when(borrowRecordRepository.findById(1L)).thenReturn(Optional.of(mockRecord));
 
             // Act
-
+            BorrowResponse response = borrowService.returnBook(1L);
 
             // Assert
+            assertNotNull(response);
+            assertEquals(BorrowStatus.RETURNED, response.getStatus());
 
+            assertNotNull(mockRecord.getReturnDate(), "Return date should be set");
+
+            assertEquals(4, sampleBook.getAvailableCopies(), "Available copies should increase by 1");
 
             // Verify
+            verify(borrowRecordRepository).save(mockRecord);
+            verify(bookRepository).save(sampleBook);
         }
 
         @Test

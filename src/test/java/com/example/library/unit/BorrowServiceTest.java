@@ -255,15 +255,21 @@ class BorrowServiceTest {
             // TODO: Create a BorrowRecord with RETURNED status
             //       Verify IllegalStateException is thrown
             // Arrange
+            BorrowRecord returnedRecord = new BorrowRecord(sampleBook, sampleMember);
+            returnedRecord.setId(1L);
+            returnedRecord.setStatus(BorrowStatus.RETURNED);
 
+            when(borrowRecordRepository.findById(1L)).thenReturn(Optional.of(returnedRecord));
 
-            // Act
+            // Act and Assert
+            IllegalStateException exception = assertThrows(IllegalStateException.class,
+                    () -> borrowService.returnBook(1L));
 
-
-            // Assert
-
+            assertEquals("This book has already been returned", exception.getMessage());
 
             // Verify
+            verify(borrowRecordRepository, never()).save(any(BorrowRecord.class));
+            verify(bookRepository, never()).save(any(Book.class));
         }
 
         @Test

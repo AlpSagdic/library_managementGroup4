@@ -170,15 +170,18 @@ class BorrowServiceTest {
             // TODO: Set member.active = false
             //       Then verify IllegalStateException is thrown with appropriate message
             // Arrange
+            sampleMember.setActive(false);
+            when(memberRepository.findById(1L)).thenReturn(Optional.of(sampleMember));
 
+            // Act and Assert
+            IllegalStateException exception = assertThrows(IllegalStateException.class,
+                    () -> borrowService.borrowBook(1L, 1L));
 
-            // Act
-
-
-            // Assert
-
+            assertEquals("Inactive members cannot borrow books", exception.getMessage());
 
             // Verify
+            verify(borrowRecordRepository, never()).save(any(BorrowRecord.class));
+            verify(bookRepository, never()).save(any(Book.class));
         }
 
         @Test

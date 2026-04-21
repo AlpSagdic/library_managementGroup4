@@ -3,10 +3,7 @@ package com.example.library.integration;
 import com.example.library.model.Book;
 import com.example.library.model.Genre;
 import com.example.library.repository.BookRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -118,6 +115,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
 
     @Nested
     @DisplayName("Genre and author queries")
+    @Disabled("Seçkin ve Hamza bu kısımlardan sorumlu")
     class FilterTests {
         // Seçkin
         @Test

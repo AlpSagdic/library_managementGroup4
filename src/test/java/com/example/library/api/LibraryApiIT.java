@@ -334,7 +334,35 @@ class LibraryApiIT extends AbstractIntegrationTest {
             // 2. Borrow both books
             // 3. Return one of them
             // 4. GET /api/borrows/member/{id}/active — should return only 1
-            fail("Not implemented yet");
+            Member sherlock = createTestMember("Sherlock Holmes", "sherlock@bakerstreet.uk", MembershipType.PREMIUM);
+            Book bookOne = createTestBook("978-0-00-000001-1", "A Study in Scarlet", "Arthur Conan Doyle");
+            Book bookTwo = createTestBook("978-0-00-000002-2", "The Sign of the Four", "Arthur Conan Doyle");
+
+            ResponseEntity<Map> borrowOne = restTemplate.postForEntity(
+                    baseUrl + "/borrows",
+                    new BorrowRequest(bookOne.getId(), sherlock.getId()),
+                    Map.class);
+            assertThat(borrowOne.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            Number borrowOneId = (Number) borrowOne.getBody().get("id");
+
+            ResponseEntity<Map> borrowTwo = restTemplate.postForEntity(
+                    baseUrl + "/borrows",
+                    new BorrowRequest(bookTwo.getId(), sherlock.getId()),
+                    Map.class);
+            assertThat(borrowTwo.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+            ResponseEntity<Map> returnResponse = restTemplate.postForEntity(
+                    baseUrl + "/borrows/" + borrowOneId.longValue() + "/return",
+                    null, Map.class);
+            assertThat(returnResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+            ResponseEntity<Map[]> activeResponse = restTemplate.getForEntity(
+                    baseUrl + "/borrows/member/" + sherlock.getId() + "/active", Map[].class);
+
+            assertThat(activeResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(activeResponse.getBody()).hasSize(1);
+            assertThat(activeResponse.getBody()[0]).containsEntry("bookTitle", "The Sign of the Four");
+            assertThat(activeResponse.getBody()[0]).containsEntry("status", "BORROWED");
         }
     }
 }

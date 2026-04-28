@@ -139,12 +139,8 @@ class BookRepositoryIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should search by author name using searchBooks()")
         void shouldSearchByAuthorKeyword() {
-            // TODO: Use searchBooks() with an author name as keyword
-            //       Verify it finds books by that author
-            Book available = createBook("978-1", "Available Book", "Author A", 3, Genre.FICTION);
-            bookRepository.save(available);
-            bookRepository.searchBooks("Author A");
-            fail("Not implemented yet");
+            bookRepository.save(createBook("978-2", "Available Book", "Author A", 1, Genre.FICTION));
+            assertThat(bookRepository.searchBooks("Author A")).hasSize(1);
         }
 
         @Test

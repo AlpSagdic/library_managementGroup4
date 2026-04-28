@@ -141,6 +141,9 @@ class BookRepositoryIT extends AbstractIntegrationTest {
         void shouldSearchByAuthorKeyword() {
             // TODO: Use searchBooks() with an author name as keyword
             //       Verify it finds books by that author
+            Book available = createBook("978-1", "Available Book", "Author A", 3, Genre.FICTION);
+            bookRepository.save(available);
+            bookRepository.searchBooks("Author A");
             fail("Not implemented yet");
         }
 
@@ -168,8 +171,10 @@ class BookRepositoryIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should handle deleting a book")
         void shouldDeleteBook() {
-            // TODO: Save a book, delete it, verify it's gone
-            fail("Not implemented yet");
+            Book available = createBook("978-1", "Available Book", "Author A", 3, Genre.FICTION);
+            bookRepository.save(available);
+            bookRepository.delete(available);
+            assertThat(bookRepository.findByIsbn("978-1")).isEmpty();
         }
     }
 }

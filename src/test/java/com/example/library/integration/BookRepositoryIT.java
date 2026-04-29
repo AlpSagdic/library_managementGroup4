@@ -121,11 +121,9 @@ class BookRepositoryIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("Genre and author queries")
     class FilterTests {
-<<<<<<< Updated upstream
 
-=======
         // Ahmet Seçkin Büyükavcu
->>>>>>> Stashed changes
+
         @Test
         @DisplayName("should find books by genre")
         void shouldFindByGenre() {
@@ -178,11 +176,9 @@ class BookRepositoryIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("Edge cases")
     class EdgeCaseTests {
-<<<<<<< Updated upstream
 
-=======
         // Ahmet Seçkin Büyükavcu
->>>>>>> Stashed changes
+
         @Test
         @DisplayName("should enforce unique ISBN constraint")
         void shouldEnforceUniqueIsbn() {

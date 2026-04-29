@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
@@ -119,21 +121,42 @@ class BookRepositoryIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("Genre and author queries")
     class FilterTests {
+<<<<<<< Updated upstream
 
+=======
+        // Ahmet Seçkin Büyükavcu
+>>>>>>> Stashed changes
         @Test
         @DisplayName("should find books by genre")
         void shouldFindByGenre() {
             // TODO: Save books of different genres
             //       Query by Genre.SCIENCE and verify only matching books are returned
-            fail("Not implemented yet");
-        }
+            createBook("978-1", "SCIENCE BOOK TEST 1", "SCIENCE BOOK WRITER 1", 10, Genre.SCIENCE);
+            createBook("978-2", "SCIENCE BOOK TEST 2", "SCIENCE BOOK WRITER 2", 10, Genre.SCIENCE);
+            createBook("978-3", "TECHNOLOGY BOOK TEST 1", "TECHNOLOGY BOOK WRITER 1", 10, Genre.TECHNOLOGY);
+            createBook("978-4", "HISTORY BOOK TEST 1", "HISTORY BOOK WRITER 1", 10, Genre.HISTORY);
+            createBook("978-5", "NON-FICTION BOOK TEST 1", "NON-FICTION BOOK WRITER 1", 10, Genre.NON_FICTION);
 
+            List<Book> genreControl = bookRepository.findByGenre(Genre.SCIENCE);
+
+            assertThat(genreControl).hasSize(2);
+            assertThat(genreControl).extracting(Book::getGenre).containsOnly(Genre.SCIENCE);
+
+        }
+        //Ahmet Seçkin Büyükavcu
         @Test
         @DisplayName("should find books by author (case insensitive, partial match)")
         void shouldFindByAuthor() {
             // TODO: Save books by different authors
             //       Search by partial author name and verify results
-            fail("Not implemented yet");
+            createBook("978-1", "Book One", "Stephen King", 5, Genre.FICTION);
+            createBook("978-2", "Book Two", "Stephen Hawking", 5, Genre.SCIENCE);
+            createBook("978-3", "Book Three", "George Orwell", 5, Genre.FICTION);
+
+            List<Book> results = bookRepository.findByAuthorContainingIgnoreCase("stephen");
+
+            assertThat(results).hasSize(2);
+            assertThat(results).extracting(Book::getAuthor).containsExactlyInAnyOrder("Stephen King", "Stephen Hawking");
         }
 
         @Test
@@ -155,14 +178,22 @@ class BookRepositoryIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("Edge cases")
     class EdgeCaseTests {
+<<<<<<< Updated upstream
 
+=======
+        // Ahmet Seçkin Büyükavcu
+>>>>>>> Stashed changes
         @Test
         @DisplayName("should enforce unique ISBN constraint")
         void shouldEnforceUniqueIsbn() {
             // TODO: Try to save two books with the same ISBN
             //       Verify a DataIntegrityViolationException is thrown
             //       Hint: Use assertThrows() and flush the persistence context
-            fail("Not implemented yet");
+            createBook("978-1", "First Book", "Author A", 5, Genre.FICTION);
+
+            assertThrows(DataIntegrityViolationException.class, () -> {
+                createBook("978-1", "Second Book", "Author B", 3, Genre.SCIENCE);
+            });
         }
 
         @Test

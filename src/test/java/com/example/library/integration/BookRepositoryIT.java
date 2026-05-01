@@ -137,16 +137,14 @@ class BookRepositoryIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should search by author name using searchBooks()")
         void shouldSearchByAuthorKeyword() {
-            // TODO: Use searchBooks() with an author name as keyword
-            //       Verify it finds books by that author
-            fail("Not implemented yet");
+            bookRepository.save(createBook("978-2", "Available Book", "Author A", 1, Genre.FICTION));
+            assertThat(bookRepository.searchBooks("Author A")).hasSize(1);
         }
 
         @Test
         @DisplayName("should return empty list when no books match search")
         void shouldReturnEmpty_WhenNoMatch() {
-            // TODO: Search for a keyword that matches nothing
-            fail("Not implemented yet");
+            assertThat(bookRepository.searchBooks("nothing")).isEmpty();
         }
     }
 
@@ -167,8 +165,10 @@ class BookRepositoryIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should handle deleting a book")
         void shouldDeleteBook() {
-            // TODO: Save a book, delete it, verify it's gone
-            fail("Not implemented yet");
+            Book available = createBook("978-1", "Available Book", "Author A", 3, Genre.FICTION);
+            bookRepository.save(available);
+            bookRepository.delete(available);
+            assertThat(bookRepository.findByIsbn("978-1")).isEmpty();
         }
     }
 }

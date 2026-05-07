@@ -128,7 +128,6 @@ class BorrowRecordTest {
 
     @Nested
     @DisplayName("Constructor / default values")
-    @Disabled("Murat bu kısımdan sorumlu")
     class ConstructorTests {
 
         @Test

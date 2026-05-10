@@ -117,13 +117,13 @@ class BorrowServiceTest {
         }
 
         // =====================================================================
-        // TODO: Students (Eren) should write the remaining borrowBook() tests
+        // TODO: Students should write the remaining borrowBook() tests
         // =====================================================================
 
         @Test
         @DisplayName("should throw when member has reached borrowing limit")
         void shouldThrow_WhenBorrowLimitReached() {
-            // TODO: Set up mocks so countActiveBorrowsByMember returns maxBooks (3 for STANDARD)
+            // ADDED: Set up mocks so countActiveBorrowsByMember returns maxBooks (3 for STANDARD)
             //       Then verify BorrowLimitExceededException is thrown
             // Arrange
             when(memberRepository.findById(1L)).thenReturn(Optional.of(sampleMember));
@@ -143,7 +143,7 @@ class BorrowServiceTest {
         @Test
         @DisplayName("should throw when member already has this book borrowed")
         void shouldThrow_WhenDuplicateBorrow() {
-            // TODO: Set up mocks so existsByBookIdAndMemberIdAndStatus returns true
+            // ADDED: Set up mocks so existsByBookIdAndMemberIdAndStatus returns true
             //       Then verify IllegalStateException is thrown
             // Arrange
             when(memberRepository.findById(1L)).thenReturn(Optional.of(sampleMember));
@@ -168,7 +168,7 @@ class BorrowServiceTest {
         @Test
         @DisplayName("should throw when inactive member tries to borrow")
         void shouldThrow_WhenMemberInactive() {
-            // TODO: Set member.active = false
+            // ADDED: Set member.active = false
             //       Then verify IllegalStateException is thrown with appropriate message
             // Arrange
             sampleMember.setActive(false);
@@ -188,7 +188,7 @@ class BorrowServiceTest {
         @Test
         @DisplayName("should decrease available copies after successful borrow")
         void shouldDecreaseAvailableCopies() {
-            // TODO: After borrowBook(), verify that book.availableCopies decreased by 1
+            // ADDED: After borrowBook(), verify that book.availableCopies decreased by 1
             //       Hint: Use ArgumentCaptor to capture the Book saved to repository
             // Arrange
             when(memberRepository.findById(1L)).thenReturn(Optional.of(sampleMember));
@@ -220,7 +220,7 @@ class BorrowServiceTest {
         @Test
         @DisplayName("should successfully return a borrowed book")
         void shouldReturnBook_WhenBorrowed() {
-            // TODO: Create a BorrowRecord with BORROWED status
+            // ADDED: Create a BorrowRecord with BORROWED status
             //       Mock the repository to return it
             //       Call returnBook() and verify:
             //       - status changed to RETURNED
@@ -252,7 +252,7 @@ class BorrowServiceTest {
         @Test
         @DisplayName("should throw when trying to return an already returned book")
         void shouldThrow_WhenAlreadyReturned() {
-            // TODO: Create a BorrowRecord with RETURNED status
+            // ADDED: Create a BorrowRecord with RETURNED status
             //       Verify IllegalStateException is thrown
             // Arrange
             BorrowRecord returnedRecord = new BorrowRecord(sampleBook, sampleMember);
@@ -275,7 +275,7 @@ class BorrowServiceTest {
         @Test
         @DisplayName("should throw when borrow record not found")
         void shouldThrow_WhenRecordNotFound() {
-            // TODO: Mock repository to return empty Optional
+            // ADDED: Mock repository to return empty Optional
             //       Verify IllegalStateException is thrown
             // Arrange
             when(borrowRecordRepository.findById(1L)).thenReturn(Optional.empty()); // Boş dönecek

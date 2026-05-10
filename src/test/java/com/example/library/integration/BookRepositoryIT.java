@@ -122,7 +122,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should find books by genre")
         void shouldFindByGenre() {
-            // TODO: Save books of different genres
+            // ADDED: Save books of different genres
             //       Query by Genre.SCIENCE and verify only matching books are returned
             createBook("978-1", "SCIENCE BOOK TEST 1", "SCIENCE BOOK WRITER 1", 10, Genre.SCIENCE);
             createBook("978-2", "SCIENCE BOOK TEST 2", "SCIENCE BOOK WRITER 2", 10, Genre.SCIENCE);
@@ -136,11 +136,11 @@ class BookRepositoryIT extends AbstractIntegrationTest {
             assertThat(genreControl).extracting(Book::getGenre).containsOnly(Genre.SCIENCE);
 
         }
-        //Ahmet Seçkin Büyükavcu
+
         @Test
         @DisplayName("should find books by author (case insensitive, partial match)")
         void shouldFindByAuthor() {
-            // TODO: Save books by different authors
+            // ADDED: Save books by different authors
             //       Search by partial author name and verify results
             createBook("978-1", "Book One", "Stephen King", 5, Genre.FICTION);
             createBook("978-2", "Book Two", "Stephen Hawking", 5, Genre.SCIENCE);
@@ -151,10 +151,12 @@ class BookRepositoryIT extends AbstractIntegrationTest {
             assertThat(results).hasSize(2);
             assertThat(results).extracting(Book::getAuthor).containsExactlyInAnyOrder("Stephen King", "Stephen Hawking");
         }
-        // Baha
+
         @Test
         @DisplayName("should search by author name using searchBooks()")
         void shouldSearchByAuthorKeyword() {
+            // ADDED: Use searchBooks() with an author name as keyword
+            //       Verify it finds books by that author
             bookRepository.save(createBook("978-2", "Available Book", "Author A", 1, Genre.FICTION));
             assertThat(bookRepository.searchBooks("Author A")).hasSize(1);
         }
@@ -162,6 +164,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should return empty list when no books match search")
         void shouldReturnEmpty_WhenNoMatch() {
+            // ADDED: Search for a keyword that matches nothing
             assertThat(bookRepository.searchBooks("nothing")).isEmpty();
         }
     }
@@ -173,7 +176,7 @@ class BookRepositoryIT extends AbstractIntegrationTest {
         @Test
         @DisplayName("should enforce unique ISBN constraint")
         void shouldEnforceUniqueIsbn() {
-            // TODO: Try to save two books with the same ISBN
+            // ADDED: Try to save two books with the same ISBN
             //       Verify a DataIntegrityViolationException is thrown
             //       Hint: Use assertThrows() and flush the persistence context
             createBook("978-1", "First Book", "Author A", 5, Genre.FICTION);
@@ -182,10 +185,11 @@ class BookRepositoryIT extends AbstractIntegrationTest {
                 createBook("978-1", "Second Book", "Author B", 3, Genre.SCIENCE);
             });
         }
-        // Baha
+
         @Test
         @DisplayName("should handle deleting a book")
         void shouldDeleteBook() {
+            // ADDED: Save a book, delete it, verify it's gone
             Book available = createBook("978-1", "Available Book", "Author A", 3, Genre.FICTION);
             bookRepository.save(available);
             bookRepository.delete(available);

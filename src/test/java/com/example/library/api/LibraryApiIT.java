@@ -191,7 +191,6 @@ class LibraryApiIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("POST /api/borrows - Error cases")
     class BorrowErrorsApi {
-        // Özge
         @Test
         @DisplayName("should return 409 when borrowing limit exceeded")
         void shouldReturn409_WhenBorrowLimitExceeded() {
@@ -272,7 +271,6 @@ class LibraryApiIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("Member API")
     class MemberApiTests {
-        // Alp
         @Test
         @DisplayName("should create a member and return 201")
         void shouldCreateMember() {
@@ -340,7 +338,6 @@ class LibraryApiIT extends AbstractIntegrationTest {
     @Nested
     @DisplayName("Search & Filter API")
     class SearchApiTests {
-        // Alp
         @Test
         @DisplayName("should search books by keyword via GET /api/books/search?keyword=...")
         void shouldSearchBooks() {

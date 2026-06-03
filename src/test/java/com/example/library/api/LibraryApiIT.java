@@ -400,3 +400,5 @@ class LibraryApiIT extends AbstractIntegrationTest {
         }
     }
 }
+
+// CHECK: PUSH
